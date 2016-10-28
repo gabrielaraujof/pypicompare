@@ -1,0 +1,52 @@
+image: gabrielaraujof/angular-cli
+
+stages:
+  - build
+  - unit test
+  - deploy staging
+  - e2e test
+  - deploy prod
+
+before_script:
+  - npm install
+
+cache:
+  paths:
+  - node_modules/
+
+bundling job:
+  stage: build
+  script:
+  - ng build
+
+unit testing job:
+  stage: unit test
+  script:
+  - ng test --watch=false
+
+pages:
+  stage: deploy staging
+  script:
+  - ng build --prod --bh /todo-ng2/
+  - mkdir public && mv dist/* public/.
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
+e2e testing job:
+  stage: e2e test
+  script:
+  - ng e2e
+  only:
+  - master
+
+deploy production job:
+  stage: deploy prod
+  script:
+  - ng build --prod
+  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
+  only:
+  - master
+  when: manual
