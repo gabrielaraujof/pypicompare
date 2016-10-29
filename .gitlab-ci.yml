@@ -27,7 +27,7 @@ unit testing job:
 pages:
   stage: deploy staging
   script:
-  - ng build --prod --bh /todo-ng2/
+  - ng build --prod --bh /pypicompare/
   - mkdir public && mv dist/* public/.
   artifacts:
     paths:
