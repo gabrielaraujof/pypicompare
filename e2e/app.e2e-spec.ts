@@ -7,7 +7,7 @@ describe('pypicompare App', function() {
     page = new PypicomparePage();
   });
 
-  it('should display message saying app works', () => {
+  it('should have title in the search bar saying PypiCompare', () => {
     page.navigateTo();
     expect(page.getTitleText()).toEqual('PypiCompare');
   });

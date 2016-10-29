@@ -24,16 +24,17 @@ unit testing job:
   script:
   - ng test --watch=false
 
-pages:
+deploy staging:
   stage: deploy staging
   script:
-  - ng build --prod --bh /pypicompare/
-  - mkdir public && mv dist/* public/.
-  artifacts:
-    paths:
-    - public
+  - ng build --prod
+  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
+  environment:
+    name: staging
+    url: https://pypicompare.firebaseapp.com
   only:
   - master
+
 
 e2e testing job:
   stage: e2e test
@@ -42,11 +43,17 @@ e2e testing job:
   only:
   - master
 
-deploy production job:
+pages:
   stage: deploy prod
   script:
-  - ng build --prod
-  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
+  - ng build --prod --bh /pypicompare/
+  - mkdir public && mv dist/* public/.
+  artifacts:
+    paths:
+    - public
+  environment:
+    name: production
+    url: https://gabrielaraujof.gitlab.io/pypicompare/
   only:
   - master
   when: manual
