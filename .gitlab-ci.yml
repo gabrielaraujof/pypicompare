@@ -8,7 +8,6 @@ stages:
   - deploy prod
 
 cache:
-  key: $CI_PROJECT_ID
   paths:
   - node_modules/
 
