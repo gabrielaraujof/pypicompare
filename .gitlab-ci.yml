@@ -9,7 +9,7 @@ stages:
 
 cache:
   untracked: true
-  key: "$CI_BUILD_REF_NAME"
+  key: "$CI_PROJECT_ID"
   paths:
     - node_modules/
 
