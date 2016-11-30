@@ -9,14 +9,14 @@ stages:
 
 cache:
   untracked: true
-  key: "$CI_PROJECT_ID"
+  key: "$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME"
   paths:
     - node_modules/
 
 bundling job:
   stage: build
   script:
-  - npm install
+  - npm install --quiet
   - ng build --prod
   artifacts:
     paths:
