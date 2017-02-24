@@ -2,10 +2,10 @@
 // https://github.com/angular/protractor/blob/master/docs/referenceConf.js
 
 /*global jasmine */
-var SpecReporter = require('jasmine-spec-reporter');
+const { SpecReporter } = require('jasmine-spec-reporter');
 
 /*environment url config */
-var BASE_URL = process.env.PROTRACTOR_BASE_URL || 'http://localhost:5100/';
+const BaseUrl = process.env.PROTRACTOR_BASE_URL || 'http://localhost:5100/';
 
 exports.config = {
   allScriptsTimeout: 11000,
@@ -16,7 +16,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: BASE_URL,
+  baseUrl: BaseUrl,
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
@@ -30,6 +30,6 @@ exports.config = {
     });
   },
   onPrepare: function() {
-    jasmine.getEnv().addReporter(new SpecReporter());
+    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   }
 };
