@@ -1,0 +1,43 @@
+@import 'colors';
+
+// Spatial helpers
+// ____________________________________________________________________________
+
+@function elevation-blur($elevation) {
+  @return $elevation * 5;
+}
+
+@function elevation-spread($elevation) {
+  @return ($elevation * 0) + 1;
+}
+
+@function key-light($elevation) {
+  @return 0 $elevation elevation-blur($elevation) 0 dark(.4);
+}
+
+@function ambient-light($elevation) {
+  @return 0 0 elevation-blur($elevation) 0 dark(.1);
+}
+
+// Shadows
+// ____________________________________________________________________________
+
+$g-spatial--elevation: (
+  app-bar: 4px,
+  raised-button--pressed: 2px,
+  float-action-button--resting: 6px,
+  float-action-button--raised: 12px,
+  card--resting: 2px,
+  card--raised: 8px,
+  menu: 8px,
+  submenu-1: 9px,
+  submenu-2: 10px,
+  dialog: 24px,
+  drawer: 16px,
+  indicator: 3px
+);
+
+@mixin g-shadow($target) {
+  $elevaton: map-get($g-spatial--elevation, $target);
+  box-shadow: ambient-light($elevaton), key-light($elevaton);
+}
