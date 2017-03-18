@@ -1,0 +1,41 @@
+@import '../styles/root/colors';
+@import '../styles/root/typography';
+@import '../styles/root/spatial';
+
+:host {
+  @include g-shadow(app-bar);
+  align-items: center;
+  background-color: map-get($g-color--primary, 500);
+  box-sizing: border-box;
+  display: flex;
+  height: 48pt;
+  max-height: 48pt;
+  padding: 8pt 16pt;
+  width: 100%;
+
+  h1 {
+    @include g-font(title);
+
+    color: map-get($g-text--light, primary);
+    margin: auto;
+  }
+
+  input {
+    @include g-font(subheading);
+    $hsize: 28pt;
+
+    background: map-get($g-color--primary, 400);
+    border-radius: $hsize;
+    border: 0;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4), 0 1px 1px rgba(255, 255, 255, .4);
+    color: map-get($g-text--light, primary);
+    flex-grow: 1;
+    height: $hsize;
+    margin-left: 16pt;
+    padding: 0 $hsize;
+
+    &::-webkit-input-placeholder {
+      color: map-get($g-text--light, tertiary);
+    }
+  }
+}

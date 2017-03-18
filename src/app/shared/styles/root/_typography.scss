@@ -1,0 +1,98 @@
+// Font imports
+// ____________________________________________________________________________
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+// Font sizes and weights
+// ____________________________________________________________________________
+
+@mixin g-typography--family {
+  font-family: 'Roboto', 'Noto Sans', sans-serif;
+}
+
+$g-typography--size: (
+  display-4: 5.6rem,
+  display-3: 2.8rem,
+  display-2: 2.25rem,
+  display-1: 1.7rem,
+  headline: 1.2rem,
+  title: 1rem,
+  subheading: .75rem,
+  body-2: .65rem,
+  body-1: .65rem,
+  caption: .6rem,
+  button: .7rem,
+);
+
+$g-typography--weight: (
+  display-4: 300,
+  display-3: 400,
+  display-2: 400,
+  display-1: 400,
+  headline: 400,
+  title: 500,
+  subheading: 400,
+  body-2: 500,
+  body-1: 400,
+  caption: 400,
+  button: 500,
+);
+
+$g-typography--line-height: (
+  display-4: 1,
+  display-3: 1,
+  display-2: 2.4rem,
+  display-1: 2rem,
+  headline: 1.6rem,
+  title: 1,
+  subheading: 1.4rem,
+  body-2: 1.2rem,
+  body-1: 1rem,
+  caption: 1,
+  button: 1,
+);
+
+$g-typography--tracking: (
+  display-4: -.01em,
+  display-3: -.005em,
+  display-2: normal,
+  display-1: normal,
+  headline: normal,
+  title: .005em,
+  subheading: .01em,
+  body-2: .01em,
+  body-1: .01em,
+  caption: .02em,
+  button: .01em,
+);
+
+$g-typography--wrap: (
+  display-4: nowrap,
+  display-3: nowrap,
+  display-2: normal,
+  display-1: normal,
+  headline: normal,
+  title: nowrap,
+  subheading: normal,
+  body-2: normal,
+  body-1: normal,
+  caption: nowrap,
+  button: nowrap,
+);
+
+@mixin g-font($target) {
+  @include g-typography--family;
+
+  font: {
+    size: map-get($g-typography--size , $target);
+    weight: map-get($g-typography--weight , $target);
+  }
+  letter-spacing: map-get($g-typography--tracking, $target);
+  line-height: map-get($g-typography--line-height, $target);
+  white-space: map-get($g-typography--wrap, $target);
+
+  @if $target == button {
+    text-transform: uppercase;
+  }
+}

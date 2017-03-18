@@ -1,0 +1,63 @@
+// Color helpers
+// ____________________________________________________________________________
+
+@function dark($percentage) {
+  @return rgba(#000, $percentage);
+}
+
+@function light($percentage) {
+  @return rgba(#fff, $percentage);
+}
+
+// Theming colors
+// ____________________________________________________________________________
+
+$g-color--primary: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2196f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+);
+
+$g-color--accent: (
+  100: #ffe57f,
+  200: #ffd740,
+  400: #ffc400,
+  700: #ffab00,
+);
+
+// Text colors
+// ____________________________________________________________________________
+
+$g-text--dark: (
+  primary: dark(.87),
+  secondary: dark(.54),
+  tertiary: dark(.38),
+  divider: dark(.12)
+);
+
+$g-text--light: (
+  primary: light(1),
+  secondary: light(.7),
+  tertiary: light(.5),
+  divider: light(.12)
+);
+
+// Icons colors
+// ____________________________________________________________________________
+
+$g-icon--dark: (
+  active: dark(.54),
+  inactive: dark(.38)
+);
+
+$g-icon--light: (
+  active: light(1),
+  inactive: light(.5)
+);

@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Pypicompare</title>
@@ -7,9 +8,74 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" integrity="sha256-t2/7smZfgrST4FS1DT0bs/KotCM74XlcqZN5Vu7xlrw="
+    crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="assets/styles/root.css">
+
 </head>
+
 <body>
-  <app-root>Loading...</app-root>
+  <app-root>
+    <style>
+      body {
+        background-color: #2196F3;
+      }
+
+      .loading {
+        display: flex;
+        font-family: serif;
+        font-size: 4rem;
+        justify-content: space-between;
+        left: 50%;
+        margin-left: -2rem;
+        position: absolute;
+        top: 30vh;
+        width: 4rem;
+      }
+
+      .loading div {
+        display: inline;
+      }
+
+      .loading div::before {
+        animation-duration: 1.4s;
+        animation-fill-mode: both;
+        animation-iteration-count: infinite;
+        animation-name: blink;
+        color: #ffe57f;
+        content: '.';
+      }
+
+      @keyframes blink {
+        0% {
+          opacity: .2;
+        }
+
+        20% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: .2;
+        }
+      }
+
+      .loading div:nth-child(2)::before {
+        animation-delay: .2s;
+      }
+
+      .loading div:nth-child(3)::before {
+        animation-delay: .4s;
+      }
+    </style>
+    <div class="loading">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    </app-root>
 </body>
+
 </html>
