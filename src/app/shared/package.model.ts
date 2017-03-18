@@ -1,4 +1,4 @@
-export interface Package {
+export interface PypiPackage {
   info: PackageInfo;
 
   // Releases and URLS will be further added.
