@@ -1,4 +1,4 @@
-image: gabrielaraujof/angular-cli
+image: gabrielaraujof/angular-cli:latest
 
 stages:
   - build
@@ -16,7 +16,7 @@ cache:
 before_script:
   - npm install --quiet
 
-bundling job:
+bundling:
   stage: build
   script:
   - ng build --prod
@@ -24,12 +24,14 @@ bundling job:
     paths:
     - dist/
 
-unit testing job:
+testing:
   stage: unit test
   script:
   - ng test --watch=false
+  dependencies:
+  - bundling
 
-deploy staging:
+deploy:staging:
   stage: deploy staging
   script:
   - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
@@ -37,11 +39,11 @@ deploy staging:
     name: staging
     url: https://pypicompare.firebaseapp.com
   dependencies:
-  - bundling job
+  - bundling
   only:
   - master
 
-e2e testing job:
+e2e:
   stage: e2e test
   script:
   - ng e2e
