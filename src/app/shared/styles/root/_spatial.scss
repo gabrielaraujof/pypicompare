@@ -1,43 +1,83 @@
 @import 'colors';
 
-// Spatial helpers
+// Elevation
 // ____________________________________________________________________________
-
-@function elevation-blur($elevation) {
-  @return $elevation * 5;
-}
-
-@function elevation-spread($elevation) {
-  @return ($elevation * 0) + 1;
-}
-
-@function key-light($elevation) {
-  @return 0 $elevation elevation-blur($elevation) 0 dark(.4);
-}
-
-@function ambient-light($elevation) {
-  @return 0 0 elevation-blur($elevation) 0 dark(.1);
-}
-
-// Shadows
-// ____________________________________________________________________________
-
-$g-spatial--elevation: (
-  app-bar: 4px,
-  raised-button--pressed: 2px,
-  float-action-button--resting: 6px,
-  float-action-button--raised: 12px,
-  card--resting: 2px,
-  card--raised: 8px,
-  menu: 8px,
-  submenu-1: 9px,
-  submenu-2: 10px,
-  dialog: 24px,
-  drawer: 16px,
-  indicator: 3px
-);
 
 @mixin g-shadow($target) {
-  $elevaton: map-get($g-spatial--elevation, $target);
-  box-shadow: ambient-light($elevaton), key-light($elevaton);
+  $kl-color: dark(.3);
+  $al-color: dark(.1);
+
+  $g-key-light: (
+    dialog:                       0 16px 32px 0 $kl-color, // 24dp
+    drawer:                       0 8px  20px 0 $kl-color, // 16dp
+    float-action-button--raised:  0 8px  16px 0 $kl-color, // 12dp
+    submenu-2:                    0 6px  12px 0 $kl-color, // 10dp
+    submenu-1:                    0 6px  11px 0 $kl-color, // 9dp
+    button--pressed:              0 6px  10px 0 $kl-color, // 8dp
+    card--raised:                 0 6px  10px 0 $kl-color, // 8dp
+    menu:                         0 6px  10px 0 $kl-color, // 8dp
+    float-action-button--resting: 0 6px  10px 0 $kl-color, // 6dp
+    app-bar:                      0 2px  8px  0 $kl-color, // 4dp
+    indicator:                    0 2px  6px  0 $kl-color, // 3dp
+    button--resting:              0 2px  5px  0 $kl-color, // 2dp
+    card--resting:                0 2px  5px  0 $kl-color, // 2dp
+    switch:                       0 1px  2px  0 $kl-color, // 1dp
+  );
+
+  $g-ambient-light: (
+    dialog:                       0 0 34px 0 $al-color, // 24dp
+    drawer:                       0 0 22px 0 $al-color, // 16dp
+    float-action-button--raised:  0 0 18px 0 $al-color, // 12dp
+    submenu-2:                    0 0 14px 0 $al-color, // 10dp
+    submenu-1:                    0 0 13px 0 $al-color, // 9dp
+    button--pressed:              0 0 12px 0 $al-color, // 8dp
+    card--raised:                 0 0 12px 0 $al-color, // 8dp
+    menu:                         0 0 12px 0 $al-color, // 8dp
+    float-action-button--resting: 0 0 12px 0 $al-color, // 6dp
+    app-bar:                      0 0 10px 0 $al-color, // 4dp
+    indicator:                    0 0 8px  0 $al-color, // 3dp
+    button--resting:              0 0 7px  0 $al-color, // 2dp
+    card--resting:                0 0 7px  0 $al-color, // 2dp
+    switch:                       0 0 4px  0 $al-color, // 1dp
+  );
+
+  box-shadow: map-get($g-ambient-light, $target), map-get($g-key-light, $target);
+}
+
+
+// Spacing
+// ____________________________________________________________________________
+
+$g-default-spacing: 8px;
+$g-side-margin: 24px;
+
+// Sizing (for width and height)
+// ____________________________________________________________________________
+
+$increment-size: 64px;
+
+@mixin g-sizing($width, $height: null) {
+  width: $width * $increment-size;
+  @if $height != null {
+    height: $height * $increment-size;
+  }
+}
+
+@mixin g-sizing--square($size) {
+  height: $size * $increment-size;
+  width: $size * $increment-size;
+}
+
+// Border-radius
+// ____________________________________________________________________________
+
+$g-radius-size: (
+  soft: 1px,
+  regular: 2px,
+  hard: 3px,
+  rounded: 50%
+);
+
+@mixin g-border-radius($size) {
+  border-radius: map-get($g-radius-size, $size);
 }

@@ -8,9 +8,9 @@
   background-color: map-get($g-color--primary, 500);
   box-sizing: border-box;
   display: flex;
-  height: 48pt;
-  max-height: 48pt;
-  padding: 8pt 16pt;
+  height: $increment-size;
+  max-height: $increment-size;
+  padding: $g-default-spacing $g-side-margin;
   width: 100%;
 
   h1 {
@@ -22,16 +22,18 @@
 
   input {
     @include g-font(subheading);
-    $hsize: 28pt;
+    $hsize: $increment-size * .5;
 
     background: map-get($g-color--primary, 400);
-    border-radius: $hsize;
-    border: 0;
+    border: {
+      radius: $hsize;
+      width: 0;
+    }
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4), 0 1px 1px rgba(255, 255, 255, .4);
     color: map-get($g-text--light, primary);
     flex-grow: 1;
     height: $hsize;
-    margin-left: 16pt;
+    margin-left: $g-default-spacing * 2;
     padding: 0 $hsize;
 
     &::-webkit-input-placeholder {
