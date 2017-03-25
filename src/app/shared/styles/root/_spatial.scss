@@ -55,6 +55,7 @@ $g-side-margin: 24px;
 // ____________________________________________________________________________
 
 $increment-size: 64px;
+$icon-size: $increment-size * .75;
 
 @mixin g-sizing($width, $height: null) {
   width: $width * $increment-size;
