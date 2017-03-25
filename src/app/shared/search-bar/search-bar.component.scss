@@ -10,14 +10,30 @@
   display: flex;
   height: $increment-size;
   max-height: $increment-size;
-  padding: $g-default-spacing $g-side-margin;
+  padding: $g-default-spacing 12px;
   width: 100%;
+
+  button {
+    @include g-sizing--square(.75);
+
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    outline: 0;
+  }
 
   h1 {
     @include g-font(title);
 
+    margin: auto 0 auto 20px;
+  }
+
+  button,
+  h1 {
     color: map-get($g-text--light, primary);
-    margin: auto;
   }
 
   input {
