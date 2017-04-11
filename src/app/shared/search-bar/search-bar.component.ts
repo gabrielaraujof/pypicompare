@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent {
+  packagesName: string [];
+  data: string;
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
-  ngOnInit() {
+  onClick(): void {
+    if (this.data) {
+      this._router.navigate(['/search'], {queryParams: {name: this.data}});
+    }
   }
 
 }

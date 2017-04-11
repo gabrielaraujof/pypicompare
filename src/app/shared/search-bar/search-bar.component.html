@@ -4,5 +4,4 @@
 <h1>
   PypiCompare
 </h1>
-<input type="text" placeholder="What package are you looking for?">
-
+<input type="text" [(ngModel)]="data" (keyup.enter)="onClick()" placeholder="What package are you looking for?">

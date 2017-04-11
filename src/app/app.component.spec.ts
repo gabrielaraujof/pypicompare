@@ -1,20 +1,34 @@
-import { TestBed, async } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { AppComponent } from './app.component';
-import { SearchBarComponent } from './shared';
+
+@Component({selector: 'app-search-bar', template: ''})
+class AppSearchBarStubComponent {}
+
+@Component({selector: 'router-outlet', template: ''})
+export class RouterOutletStubComponent { }
+
+let comp: AppComponent;
+let fixture: ComponentFixture<AppComponent>;
 
 describe('App: Pypicompare', () => {
-  beforeEach(() => {
+  beforeEach( async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        SearchBarComponent
-      ],
+        AppSearchBarStubComponent,
+        RouterOutletStubComponent
+      ]
+    })
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(AppComponent);
+      comp = fixture.componentInstance;
     });
-  });
-
-  it('should create the app', async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
   }));
+
+  it('should create the app', () => {
+    expect(comp).toBeDefined();
+  });
 });
