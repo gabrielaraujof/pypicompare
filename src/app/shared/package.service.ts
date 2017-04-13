@@ -17,7 +17,7 @@ export class PackageService {
   constructor(private http: Http) { }
 
   getPackages(packages: Array<string>): Observable<PypiPackage> {
-    let packageObservables = packages.map((packageName: string) => {
+    const packageObservables = packages.map((packageName: string) => {
       return this.http.get(`${this.pypiUrl}/${packageName}/json`);
     });
 
@@ -27,7 +27,7 @@ export class PackageService {
   }
 
   private handleError(error) {
-    let msg = `Status code {error.status} on url {error.url}`;
+    const msg = `Status code {error.status} on url {error.url}`;
     console.error(msg);
     return Observable.throw(msg);
   }

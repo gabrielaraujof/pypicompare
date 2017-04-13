@@ -1,8 +1,9 @@
 image: gabrielaraujof/angular-cli:latest
 
 stages:
-  - build
+  - linter
   - unit test
+  - build
   - deploy staging
   - e2e test
   - deploy prod
@@ -16,6 +17,15 @@ cache:
 before_script:
   - npm install --quiet
 
+linting:
+  stage: linter
+  script: ng lint
+
+testing:
+  stage: unit test
+  script:
+  - ng test --watch=false
+
 bundling:
   stage: build
   script:
@@ -23,13 +33,6 @@ bundling:
   artifacts:
     paths:
     - dist/
-
-testing:
-  stage: unit test
-  script:
-  - ng test --watch=false
-  dependencies:
-  - bundling
 
 deploy:staging:
   stage: deploy staging
