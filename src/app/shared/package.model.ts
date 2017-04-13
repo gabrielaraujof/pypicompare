@@ -45,7 +45,7 @@ export class GetScore implements PypiPackage {
 
   _packObject: PypiPackage;
 
-  constructor(packObject: PypiPackage){
+  constructor(packObject: PypiPackage) {
     this._packObject = packObject;
   }
 

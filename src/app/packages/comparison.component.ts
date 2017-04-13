@@ -31,7 +31,7 @@ export class ComparisonComponent implements OnInit {
      * Method calls service to get data of api.
      * @param data
      */
-    getPackages(): void{
+    getPackages(): void {
         this._packageService.getPackages([this.params])
             .subscribe(
                 packages => this.packagesResult = packages,

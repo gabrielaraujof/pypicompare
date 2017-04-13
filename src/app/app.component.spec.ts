@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 @Component({selector: 'app-search-bar', template: ''})
 class AppSearchBarStubComponent {}
 
+// tslint:disable-next-line:component-selector
 @Component({selector: 'router-outlet', template: ''})
 export class RouterOutletStubComponent { }
 

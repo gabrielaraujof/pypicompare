@@ -9,7 +9,7 @@ describe('Package Service', () => {
   let backend: MockBackend;
   let sampleRequest: Request;
   let sampleResponses: Array<Response>;
-  let sampleJsons = [
+  const sampleJsons = [
     { info: { name: 'Django' } },
     { info: { name: 'pandas' } },
   ];
