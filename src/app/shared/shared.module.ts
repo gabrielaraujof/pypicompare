@@ -1,17 +1,20 @@
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SearchBarComponent } from 'app/shared';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
-    declarations: [
-        SearchBarComponent
-    ],
-    imports: [
-        FormsModule
-    ],
-    exports: [
-        FormsModule,
-        SearchBarComponent
-    ]
+  declarations: [
+    SearchBarComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    SearchBarComponent
+  ]
 })
-export class SharedModule {}
+export class SharedModule { }

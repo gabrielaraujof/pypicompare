@@ -5,7 +5,7 @@ export class PypicomparePage {
     return browser.get('/');
   }
 
-  getTitleText() {
-    return element(by.css('app-root app-search-bar h1')).getText();
+  getWelcomeText() {
+    return element(by.css('app-root .container h1')).getText();
   }
 }
