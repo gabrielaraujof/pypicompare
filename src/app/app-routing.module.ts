@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { HomeComponent } from 'app/home/home.component';
-import { ComparisonComponent } from 'app/packages/comparison.component';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ComparisonsComponent } from './comparisons/comparisons.component';
+import { ComparisonsModule } from './comparisons/comparisons.module';
+import { WelcomeComponent } from './welcome/welcome.component';
+
+const appRoutes: Routes = [
+  { path: 'home', component: WelcomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot([
-            {path: 'home', component: HomeComponent},
-            {path: 'search', component: ComparisonComponent},
-            {path: '', redirectTo: 'home', pathMatch: 'full'},
-            {path: '**', redirectTo: 'home', pathMatch: 'full'}
-        ])
-    ],
-    exports: [RouterModule]
+  imports: [
+    ComparisonsModule,
+    RouterModule.forRoot(appRoutes)
+  ],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

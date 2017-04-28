@@ -1,26 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { ComparisonComponent } from 'app/packages/comparison.component';
-import { HomeComponent } from 'app/home/home.component';
-import { AppRoutingModule } from 'app/app-routing.module';
-import { SharedModule } from 'app/shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
+import { ComparisonsModule } from './comparisons/comparisons.module';
+import { SharedModule } from './shared/shared.module';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    ComparisonComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     SharedModule,
-    AppRoutingModule
+    ComparisonsModule,
+    AppRoutingModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

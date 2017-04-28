@@ -7,8 +7,8 @@ describe('pypicompare App', function() {
     page = new PypicomparePage();
   });
 
-  it('should have title in the search bar saying PypiCompare', () => {
+  it('should have welcome text saying You\'re home', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('PypiCompare');
+    expect(page.getWelcomeText()).toEqual('You\'re in home!');
   });
 });
