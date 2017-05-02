@@ -1,0 +1,37 @@
+@import '../../shared/styles/root/colors';
+@import '../../shared/styles/root/typography';
+@import '../../shared/styles/root/spatial';
+
+:host {
+  @include g-shadow(app-bar);
+  align-items: center;
+  background-color: map-get($g-color--primary, 700);
+  box-sizing: border-box;
+  display: flex;
+  height: $increment-size;
+  max-height: $increment-size;
+  padding: $g-default-spacing 12px;
+  width: 100%;
+
+  button {
+    @include g-sizing--square(.75);
+
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    outline: 0;
+  }
+
+  h1 {
+    @include g-font(title);
+    margin: auto 0 auto 20px;
+  }
+
+  button,
+  h1 {
+    color: map-get($g-text--light, primary);
+  }
+}
