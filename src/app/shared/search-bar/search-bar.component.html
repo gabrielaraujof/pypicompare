@@ -1,1 +1,7 @@
-<input type="text" [(ngModel)]="data" (keyup.enter)="onClick()" placeholder="What package are you looking for?">
+<button type="button" (click)="search()">
+  <i class="material-icons">search</i>
+</button>
+<button type="button" [hidden]="!query" (click)="clearSearch()">
+  <i class="material-icons">close</i>
+</button>
+<input type="text" #searchInput (blur)="exitEditingMode()" (focus)="enterEditingMode()" [(ngModel)]="query" (keyup.enter)="search()" (keyup.esc)="removeFocus()" placeholder="What package are you looking for?">
