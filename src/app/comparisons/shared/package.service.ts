@@ -12,7 +12,7 @@ import { PypiPackage } from './package.model';
 
 @Injectable()
 export class PackageService {
-  private pypiUrl = 'http://pypi.python.org/pypi';
+  private pypiUrl = 'https://pypi.python.org/pypi';
 
   constructor(private http: Http) { }
 
