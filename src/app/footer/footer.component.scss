@@ -1,0 +1,12 @@
+@import '../shared/styles/root/colors';
+
+.footer-wrapper {
+    display: table-row;
+    height: 1px;
+}
+.footer-widgets {
+    background-color: map-get($g-text--dark, primary);
+    border-bottom: 1px solid light(0.05);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 40px 0;
+}
