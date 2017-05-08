@@ -38,13 +38,12 @@
     }
 
     .widget {
-
         display: block;
         flex-basis: 33%;
         word-break: break-all;
         background-color: transparent;
         box-shadow: none;
-        padding-left: 8%;
+        padding-left: 13%;
         position: relative;
         word-wrap: break-word;
 
@@ -55,7 +54,7 @@
                 content: '';
                 display: block;
                 position: absolute;
-                right:0%;
+                right: -2%;
                 top: 0;
                 width: 3px;
             }

@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComparisonsModule } from './comparisons/comparisons.module';
 import { SharedModule } from './shared/shared.module';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { FooterComponent } from "app/footer/footer.component";
+import { FooterComponent } from 'app/footer/footer.component';
 
 @NgModule({
   declarations: [
