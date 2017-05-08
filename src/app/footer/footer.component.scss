@@ -10,50 +10,26 @@
     height: $hsize;
     position: relative;
     transition: background-color .2s ease;
-
-    .footer-wrapper {
-        display: block;
-        border-bottom: 1px solid light(0.05);
-    }
-
-    .footer {
-        box-sizing: border-box;
-    }
+    display: block;
+    border-bottom: 1px solid light(0.05);
+    color:light(1);
 
     .footer-widgets {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-around;
-        align-items: center;
-        background-color: map-get($g-color--primary, 900);
+        align-items: baseline;
+        background-color: map-get($g-color--primary, 700);
         border-bottom: 1px solid light(0.05);
-        color: light(0.7);
+        color: map-get($g-color--accent, 200);
         padding: 40px 0;
     }
 
-    p {
-        line-height: 26px;
-    }
-
-    .footer-container {
-        display: block;
-        flex-grow: 0;
-        overflow-wrap: break-word;
-
-        .nav-link {
-            color:light(0.7) !important;
-
-            &:hover {
-                color: light(0.9)!important;
-            }
-        }
         
-    }
-
     .footer-bottom {
-        background-color: #424242;
-        color: #fff;
+        background-color: map-get($g-color--primary, 900);
+        color: light(1);
         line-height: 32px;
         padding: 30px 0;
         display: flex;
@@ -62,10 +38,15 @@
     }
 
     .widget {
+
+        display: block;
+        flex-basis: 33%;
+        word-break: break-all;
         background-color: transparent;
         box-shadow: none;
-        padding: 0;
+        padding-left: 8%;
         position: relative;
+        word-wrap: break-word;
 
         &.right-border{
             &:after {
@@ -74,9 +55,21 @@
                 content: '';
                 display: block;
                 position: absolute;
-                right: -124px;
+                right:0%;
                 top: 0;
-                width: 2px;
+                width: 3px;
+            }
+        }
+
+        p {
+            line-height: 26px;
+            color: light(1);
+        }
+
+        .nav-link {
+            color: light(1);
+            &:hover {
+                color: map-get($g-color--accent, 100);
             }
         }
 
@@ -99,7 +92,6 @@
     }
     
     .widgettitle {
-        color: #fff;
         font-size: 16px;
         line-height: 32px;
     }
