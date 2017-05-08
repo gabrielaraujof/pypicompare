@@ -6,9 +6,12 @@ import { AppComponent } from './app.component';
 @Component({ selector: 'app-search-bar', template: '' })
 class AppSearchBarStubComponent { }
 
+@Component({selector: 'app-footer', template: ''})
+class FooterStubComponent { }
+
 // tslint:disable-next-line:component-selector
 @Component({ selector: 'router-outlet', template: '' })
-export class RouterOutletStubComponent { }
+class RouterOutletStubComponent { }
 
 let comp: AppComponent;
 let fixture: ComponentFixture<AppComponent>;
@@ -18,6 +21,7 @@ describe('App: Pypicompare', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
+        FooterStubComponent,
         AppSearchBarStubComponent,
         RouterOutletStubComponent
       ]
