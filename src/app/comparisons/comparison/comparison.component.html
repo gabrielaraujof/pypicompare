@@ -1,4 +1,4 @@
- <div *ngFor="let package of packagesResult" class="panel panel-primary">
+ <div *ngFor="let package of packagesResult | async" class="panel panel-primary">
      <div class="panel-heading">
         {{package.info.description}}
      </div>

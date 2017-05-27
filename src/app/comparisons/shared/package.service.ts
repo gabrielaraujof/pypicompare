@@ -16,14 +16,18 @@ export class PackageService {
 
   constructor(private http: Http) { }
 
-  getPackages(packages: Array<string>): Observable<PypiPackage> {
+  getPackages(packages: Array<string>): Observable<PypiPackage[]> {
     const packageObservables = packages.map((packageName: string) => {
       return this.http.get(`${this.pypiUrl}/${packageName}/json`);
     });
 
-    return Observable.merge(...packageObservables)
+    const resultObservable = Observable.merge(...packageObservables)
       .map((res: Response) => <PypiPackage>res.json())
-      .catch(this.handleError);
+      .toArray();
+
+    resultObservable.catch(this.handleError);
+
+    return resultObservable;
   }
 
   private handleError(error) {
