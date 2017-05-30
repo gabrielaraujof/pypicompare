@@ -1,5 +1,42 @@
- <div *ngFor="let package of packagesResult | async" class="panel panel-primary">
-     <div class="panel-heading">
-        {{package.info.description}}
-     </div>
- </div>
+<section>
+  <header>
+    <ul>
+      <li *ngFor="let package of selectedPackages">
+        {{package.info.name}}
+      </li>
+    </ul>
+  </header>
+
+  <table>
+    <tr>
+      <td></td>
+      <th *ngFor="let package of selectedPackages">
+        {{package.info.name}}
+      </th>
+    </tr>
+    <tr>
+      <td>Summary</td>
+      <td *ngFor="let package of selectedPackages">
+        {{package.info.summary}}
+      </td>
+    </tr>
+    <tr>
+      <td>Author</td>
+      <td *ngFor="let package of selectedPackages">
+        {{package.info.author}}
+      </td>
+    </tr>
+    <tr>
+      <td>License</td>
+      <td *ngFor="let package of selectedPackages">
+        {{package.info.license}}
+      </td>
+    </tr>
+    <tr>
+      <td>Version</td>
+      <td *ngFor="let package of selectedPackages">
+        {{package.info.version}}
+      </td>
+    </tr>
+  </table>
+</section>
