@@ -1,28 +1,14 @@
 <div class="footer-widgets">
-    <div class="widget right-border">
-        <h2 class="widgettile">Pypicompare</h2>
-        <p>adfdfasfshhhhhhterersdsdsdssdsddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
+    <div>
+        <h2>{{ title }}</h2>
+        <p>{{ content }}</p>
     </div>
-    <div class="widget right-border">
-        <h2 class="widgettile">Social</h2>
-        <ul class="nav nav-stacked">
-            <li class="nav-item"><a href="#" class="nav-link">Facebook</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Twitter</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Instagram</a></li>
-        </ul>
-    </div>
-    <div class="widget">
-        <h2 class="widgettile">Pages</h2>
-        <ul class="nav nav-stacked">
-            <li class="nav-item"><a href="#" class="nav-link">NpmCompare.com</a></li>
-        </ul>
-    </div>
-    
+    <ng-content></ng-content>
 </div>
 <div class="footer-bottom">
-    <div class="widget">
+    <div>
         <div class="footer-bottom-center">
-            Copyright © 2017 - All Rights Reserved
+            {{ footer }}
         </div>
     </div>
 </div>
