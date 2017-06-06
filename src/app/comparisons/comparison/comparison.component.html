@@ -1,8 +1,10 @@
-<section>
+<section *ngIf="selectedPackages; then comparisonTable; else noComparison"></section>
+
+<ng-template #comparisonTable>
   <header>
     <ul>
       <li *ngFor="let package of selectedPackages">
-        {{package.info.name}}
+        {{package.info.name | uppercase }}
       </li>
     </ul>
   </header>
@@ -39,4 +41,8 @@
       </td>
     </tr>
   </table>
-</section>
+</ng-template>
+
+<ng-template #noComparison>
+  <!-- Empty State for when the comparison page is reached without selected packages -->
+</ng-template>
