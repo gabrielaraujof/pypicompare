@@ -46,8 +46,42 @@ header {
   }
 }
 
-table {
-  margin: $g-default-spacing 12px;
+section {
+  margin: $g-side-margin;
+
+  table {
+    @include g-shadow(card--resting);
+    @include g-border-radius(hard);
+
+    background-color: light(1);
+    border-collapse: collapse;
+    border-spacing: 0;
+    overflow: hidden;
+  }
+
+  tr {
+    border-top: 1px solid map-get($g-text--dark, divider);
+  }
+
+  th {
+    &.column-header {
+      color: map-get($g-color--primary, 600);
+    }
+
+    &.index {
+      min-width: $increment-size * 3;
+    }
+  }
+
+  th,
+  td {
+    height: $increment-size;
+    padding: $g-default-spacing * 2;
+  }
+
+  td {
+    min-width: $increment-size * 6;
+  }
 }
 
 
