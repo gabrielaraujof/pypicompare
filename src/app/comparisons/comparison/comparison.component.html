@@ -4,7 +4,7 @@
 
 <ng-template #tableHeader let-package>
   <tr>
-    <th></th>
+    <th class="column-header"></th>
     <th class="column-header" *ngFor="let package of selectedPackages">
       {{package.info.name}}
     </th>
@@ -24,7 +24,7 @@
       <div *ngTemplateOutlet="tableHeader; context: {$implicit: package}">
       </div>
       <tr>
-        <th class="index">Summary</th>
+        <th class="index">Downloads</th>
         <td *ngFor="let package of selectedPackages">
           {{package.info.summary}}
         </td>
@@ -45,6 +45,34 @@
         <th class="index">Version</th>
         <td *ngFor="let package of selectedPackages">
           {{package.info.version}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Total Releases</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.releasesArray.length}}
+        </td>
+      </tr>
+
+      <tr>
+        <th class="section-header" [attr.colspan]="selectedPackages.length + 1">Downloads</th>
+      </tr>
+      <tr>
+        <th class="index">Last day</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.downloads.last_day}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Last week</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.downloads.last_week}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Last month</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.downloads.last_month}}
         </td>
       </tr>
     </table>

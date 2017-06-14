@@ -14,8 +14,8 @@
 
 header {
   display: none;
-  height: $increment-size * 1.5;
   margin-bottom: $g-default-spacing;
+  min-height: $increment-size * 1.5;
   width: 100%;
 
   ul {
@@ -61,11 +61,24 @@ section {
 
   tr {
     border-top: 1px solid map-get($g-text--dark, divider);
+
+    &:hover {
+      td,
+      th:not(.column-header):not(.section-header) {
+        background-color: map-get($g-color--grey, 200);
+      }
+    }
   }
 
   th {
     &.column-header {
-      color: map-get($g-color--primary, 600);
+      background-color: map-get($g-color--primary, 400);
+      color: map-get($g-text--light, primary);
+    }
+
+    &.section-header {
+      background-color: map-get($g-color--primary, 50);
+      text-align: center;
     }
 
     &.index {
@@ -80,7 +93,7 @@ section {
   }
 
   td {
-    min-width: $increment-size * 6;
+    min-width: $increment-size * 4;
   }
 }
 

@@ -22,7 +22,7 @@ export class PackageService {
     });
 
     const resultObservable = Observable.merge(...packageObservables)
-      .map((res: Response) => <PypiPackage>res.json())
+      .map((res: Response) => new PypiPackage(res.json()))
       .toArray();
 
     resultObservable.catch(this.handleError);
