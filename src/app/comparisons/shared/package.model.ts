@@ -1,8 +1,22 @@
-export interface PypiPackage {
+export class PypiPackage implements Package {
   info: PackageInfo;
-  getScore(packObject: PypiPackage): number;
+  releases: any;
+
+  constructor(input: Package) {
+    // TODO add validation of json
+    this.info = input.info;
+    this.releases = input.releases;
+  }
+
+  get releasesArray(): Array<any> {
+    return Object.keys(this.releases).map((version) => this.releases[version]);
+  }
+}
+
+interface Package {
+  info: PackageInfo;
   // Releases and URLS will be further added.
-  // releases: Array<Array<Url>>;
+  releases: any;
   // urls: Array<Url>
 }
 
@@ -38,21 +52,4 @@ interface PackageDownloads {
   last_month: number;
   last_week: number;
   last_day: number;
-}
-
-export class GetScore implements PypiPackage {
-  info: PackageInfo;
-
-  _packObject: PypiPackage;
-
-  constructor(packObject: PypiPackage) {
-    this._packObject = packObject;
-  }
-
-  getScore(packObject: PypiPackage): number {
-    return +packObject.info.version[0] + 3 * packObject.info.downloads.last_day +
-      2 * packObject.info.downloads.last_month + packObject.info.downloads.last_week;
-
-  }
-
 }

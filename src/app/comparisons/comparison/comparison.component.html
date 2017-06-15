@@ -1,5 +1,84 @@
- <div *ngFor="let package of packagesResult" class="panel panel-primary">
-     <div class="panel-heading">
-        {{package.info.description}}
-     </div>
- </div>
+<article *ngIf="selectedPackages; then comparisonTable; else noComparison"></article>
+
+<ng-template #packageName let-package>{{package.info.name | uppercase }}</ng-template>
+
+<ng-template #tableHeader let-package>
+  <tr>
+    <th class="column-header"></th>
+    <th class="column-header" *ngFor="let package of selectedPackages">
+      {{package.info.name}}
+    </th>
+  </tr>
+</ng-template>
+
+<ng-template #comparisonTable>
+  <header>
+    <ul>
+      <li *ngFor="let package of selectedPackages">
+        <span *ngTemplateOutlet="packageName; context: {$implicit: package}"></span>
+      </li>
+    </ul>
+  </header>
+  <section>
+    <table>
+      <div *ngTemplateOutlet="tableHeader; context: {$implicit: package}">
+      </div>
+      <tr>
+        <th class="index">Downloads</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.summary}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Author</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.author}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">License</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.license}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Version</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.version}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Total Releases</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.releasesArray.length}}
+        </td>
+      </tr>
+
+      <tr>
+        <th class="section-header" [attr.colspan]="selectedPackages.length + 1">Downloads</th>
+      </tr>
+      <tr>
+        <th class="index">Last day</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.downloads.last_day}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Last week</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.downloads.last_week}}
+        </td>
+      </tr>
+      <tr>
+        <th class="index">Last month</th>
+        <td *ngFor="let package of selectedPackages">
+          {{package.info.downloads.last_month}}
+        </td>
+      </tr>
+    </table>
+  </section>
+</ng-template>
+
+<ng-template #noComparison>
+  <!-- Empty State for when the comparison page is reached without selected packages -->
+</ng-template>

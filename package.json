@@ -12,7 +12,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "^1.0.0",
     "@angular/common": "^4.0.2",
     "@angular/compiler": "^4.0.2",
     "@angular/compiler-cli": "^4.0.2",
@@ -28,6 +27,7 @@
     "zone.js": "^0.8.5"
   },
   "devDependencies": {
+    "@angular/cli": "^1.1.0",
     "@types/jasmine": "2.5.45",
     "@types/node": "^7.0.12",
     "codelyzer": "^2.1.1",
