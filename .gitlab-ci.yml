@@ -1,69 +1,93 @@
-image: gabrielaraujof/angular-cli:latest
+# This file is a template, and might need editing before it works on your project.
+image: ayufan/openshift-cli
 
 stages:
-  - linter
-  - unit test
-  - build
-  - deploy staging
-  - e2e test
-  - deploy prod
+  - test
+  - review
+  - staging
+  - production
+  - cleanup
 
-cache:
-  untracked: true
-  key: "$CI_BUILD_REF_NAME"
-  paths:
-  - node_modules
+variables:
+  OPENSHIFT_SERVER: openshift.default.svc.cluster.local
+  # OPENSHIFT_DOMAIN: apps.example.com
+  # Configure this variable in Secure Variables:
+  # OPENSHIFT_TOKEN: my.openshift.token
 
-before_script:
-  - npm install --quiet
-
-linting:
-  stage: linter
-  script: ng lint
-
-testing:
-  stage: unit test
+test1:
+  stage: test
+  before_script: []
   script:
-  - ng test --watch=false
+    - echo run tests
 
-bundling:
-  stage: build
+test2:
+  stage: test
+  before_script: []
   script:
-  - ng build --prod
-  artifacts:
-    paths:
-    - dist/
+    - echo run tests
 
-deploy:staging:
-  stage: deploy staging
+.deploy: &deploy
+  before_script:
+    - oc login "$OPENSHIFT_SERVER" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
+    - oc project "$CI_PROJECT_NAME-$CI_PROJECT_ID" 2> /dev/null || oc new-project "$CI_PROJECT_NAME-$CI_PROJECT_ID"
   script:
-  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
+    - "oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker"
+    - "oc start-build $APP --from-dir=. --follow || sleep 3s || oc start-build $APP --from-dir=. --follow"
+    - "oc get routes $APP 2> /dev/null || oc expose service $APP --hostname=$APP_HOST"
+
+review:
+  <<: *deploy
+  stage: review
+  variables:
+    APP: $CI_COMMIT_REF_NAME
+    APP_HOST: $CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$OPENSHIFT_DOMAIN
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$OPENSHIFT_DOMAIN
+    on_stop: stop-review
+  only:
+    - branches
+  except:
+    - master
+
+stop-review:
+  <<: *deploy
+  stage: cleanup
+  script:
+    - oc delete all -l "app=$APP"
+  when: manual
+  variables:
+    APP: $CI_COMMIT_REF_NAME
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  only:
+    - branches
+  except:
+    - master
+
+staging:
+  <<: *deploy
+  stage: staging
+  variables:
+    APP: staging
+    APP_HOST: $CI_PROJECT_NAME-staging.$OPENSHIFT_DOMAIN
   environment:
     name: staging
-    url: https://pypicompare.firebaseapp.com
-  dependencies:
-  - bundling
+    url: http://$CI_PROJECT_NAME-staging.$OPENSHIFT_DOMAIN
   only:
-  - master
+    - master
 
-e2e:
-  stage: e2e test
-  script:
-  - ng e2e
-  only:
-  - master
-
-pages:
-  stage: deploy prod
-  script:
-  - ng build --prod --bh /pypicompare/
-  - mkdir public && mv dist/* public/.
-  artifacts:
-    paths:
-    - public
+production:
+  <<: *deploy
+  stage: production
+  variables:
+    APP: production
+    APP_HOST: $CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
+  when: manual
   environment:
     name: production
-    url: https://gabrielaraujof.gitlab.io/pypicompare/
+    url: http://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
   only:
-  - master
-  when: manual
+    - master
