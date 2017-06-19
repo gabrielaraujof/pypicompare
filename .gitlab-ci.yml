@@ -15,6 +15,7 @@ cache:
   - node_modules
 
 before_script:
+  - sudo chown -R $(whoami) /builds
   - npm install --quiet
 
 linting:
