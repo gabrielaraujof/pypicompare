@@ -1,4 +1,4 @@
-image: gabrielaraujof/angular-cli:latest
+image: nginx:latest
 
 stages:
   - linter
@@ -14,22 +14,25 @@ cache:
   paths:
   - node_modules
 
-before_script:
-  - sudo chown -R $(whoami) /builds
-  - npm install --quiet
-
 linting:
   stage: linter
-  script: ng lint
+  image: gabrielaraujof/angular-cli:latest
+  script:
+  - npm install --quiet
+  - ng lint
 
 testing:
   stage: unit test
+  image: gabrielaraujof/angular-cli:latest
   script:
+  - npm install --quiet
   - ng test --watch=false
 
 bundling:
   stage: build
+  image: gabrielaraujof/angular-cli:latest
   script:
+  - npm install --quiet
   - ng build --prod
   artifacts:
     paths:
