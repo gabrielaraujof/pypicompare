@@ -1,5 +1,5 @@
 .angular_cli: &ng_image
-  image: node:alpine
+  image: node:latest
 
 .npm_install:
   - &npm_install
@@ -42,7 +42,7 @@ test:
   stage: test
   script:
     - *npm_install
-    - node_modules/.bin/ng test --watch=false
+    - node_modules/.bin/ng test -sr
   only:
     - branches
 
