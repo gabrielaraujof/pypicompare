@@ -1,12 +1,26 @@
-image: gabrielaraujof/angular-cli:latest
+.angular_cli: &ng_image
+  image: gabrielaraujof/angular-cli:latest
+
+.npm_install:
+  - &npm_install
+    npm intall --quiet
+
+
+image: registry.gitlab.com/gitlab-examples/kubernetes-deploy
+
+variables:
+  # Application deployment domain
+  KUBE_DOMAIN: domain.example.com
 
 stages:
   - linter
-  - unit test
+  - test
   - build
-  - deploy staging
-  - e2e test
-  - deploy prod
+  - review
+  - staging
+  - e2e
+  - production
+  - cleanup
 
 cache:
   untracked: true
@@ -14,56 +28,88 @@ cache:
   paths:
   - node_modules
 
-before_script:
-  - npm install --quiet
-
-linting:
+linter:
+  <<: *ng_image
   stage: linter
-  script: ng lint
-
-testing:
-  stage: unit test
   script:
-  - ng test --watch=false
+    - *npm_install
+    - ng lint
+  only:
+    - branches
 
-bundling:
+test:
+  <<: *ng_image
+  stage: test
+  script:
+    - *npm_install
+    - ng test -sr
+  only:
+    - branches
+
+build:
+  <<: *ng_image
   stage: build
   script:
-  - ng build --prod
+    - *npm_install
+    - ng build --prod
   artifacts:
     paths:
     - dist/
+  only:
+    - branches
 
-deploy:staging:
-  stage: deploy staging
+review:
+  stage: review
   script:
-  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
+    - command deploy
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
+    on_stop: stop_review
+  dependencies:
+    - build
+  only:
+    - branches
+  except:
+    - master
+
+stop_review:
+  stage: cleanup
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - command destroy
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual
+  only:
+    - branches
+  except:
+    - master
+
+staging:
+  stage: staging
+  script:
+    - command deploy
   environment:
     name: staging
-    url: https://pypicompare.firebaseapp.com
+    url: http://$CI_PROJECT_NAME-staging.$KUBE_DOMAIN
   dependencies:
-  - bundling
+    - build
   only:
-  - master
+    - master
 
-e2e:
-  stage: e2e test
+production:
+  stage: production
   script:
-  - ng e2e
-  only:
-  - master
-
-pages:
-  stage: deploy prod
-  script:
-  - ng build --prod --bh /pypicompare/
-  - mkdir public && mv dist/* public/.
-  artifacts:
-    paths:
-    - public
+    - command deploy
   environment:
     name: production
-    url: https://gabrielaraujof.gitlab.io/pypicompare/
-  only:
-  - master
+    url: http://$CI_PROJECT_NAME.$KUBE_DOMAIN
+  dependencies:
+    - build
   when: manual
+  only:
+    - master
+
