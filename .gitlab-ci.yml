@@ -6,7 +6,7 @@
     npm install --quiet
 
 
-image: registry.gitlab.com/gitlab-examples/kubernetes-deploy
+image: registry.gitlab.com/gitlab-examples/openshift-deploy
 
 variables:
   # Application deployment domain
@@ -60,6 +60,8 @@ build:
 
 review:
   stage: review
+  variables:
+    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
   script:
     - command deploy
   environment:
@@ -78,7 +80,7 @@ stop_review:
   variables:
     GIT_STRATEGY: none
   script:
-    - command destroy
+    - command remove_deploy
   environment:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
@@ -90,6 +92,8 @@ stop_review:
 
 staging:
   stage: staging
+  variables:
+    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-staging.$KUBE_DOMAIN
   script:
     - command deploy
   environment:
@@ -102,6 +106,8 @@ staging:
 
 production:
   stage: production
+  variables:
+    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME.$KUBE_DOMAIN
   script:
     - command deploy
   environment:
