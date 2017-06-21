@@ -59,7 +59,7 @@ build:
     - branches
 
 docker-image:
-  image: docker:alpine
+  image: docker:latest
   services:
     - docker:dind
   stage: docker
