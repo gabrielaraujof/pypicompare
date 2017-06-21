@@ -49,9 +49,13 @@ test:
 build:
   <<: *ng_image
   stage: build
+  before_script:
+  - docker login -u "$GITLAB_USER_ID" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
   script:
     - *npm_install
     - node_modules/.bin/ng build --prod
+    - docker build -t "$CI_REGISTRY_IMAGE:docker-image" .
+    - docker push "$CI_REGISTRY_IMAGE:docker-image"
   artifacts:
     paths:
     - dist/
@@ -62,11 +66,7 @@ review:
   stage: review
   variables:
     CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
-  before_script:
-  - docker login -u "$GITLAB_USER_ID" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
   script:
-    - docker build -t "$CI_REGISTRY_IMAGE:docker-image" .
-    - docker push "$CI_REGISTRY_IMAGE:docker-image"
     - command deploy
   environment:
     name: review/$CI_COMMIT_REF_NAME
