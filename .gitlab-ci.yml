@@ -76,12 +76,12 @@ docker-image:
 review:
   stage: review
   variables:
-    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
+    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.review.$KUBE_DOMAIN
   script:
     - command deploy
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
+    url: http://$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.review.$KUBE_DOMAIN
     on_stop: stop_review
   dependencies:
     - build
