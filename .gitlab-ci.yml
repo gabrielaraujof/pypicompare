@@ -5,13 +5,13 @@
   - &npm_install
     npm install --quiet
 
-.docker_daemon: &dind
-  services:
-    - docker:dind
-
 image: registry.gitlab.com/gitlab-examples/openshift-deploy
 
+services:
+ - docker:dind
+
 variables:
+  DOCKER_DRIVER: overlay
   # Application deployment domain
   KUBE_DOMAIN: starter-us-east-1.openshiftapps.com
 
@@ -62,13 +62,11 @@ build:
     - branches
 
 review:
-  <<: *dind
   stage: review
   variables:
     CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
-    DOCKER_DRIVER: overlay
   before_script:
-  - docker login -u "$GITLAB_USER_ID" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+  - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
   script:
     - docker build -t "$CI_REGISTRY_IMAGE:docker-image" .
     - docker push "$CI_REGISTRY_IMAGE:docker-image"
