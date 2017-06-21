@@ -63,7 +63,7 @@ review:
   variables:
     CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_DOMAIN
   before_script:
-  - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
+  - docker login -u "$GITLAB_USER_ID" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
   script:
     - docker build -t "$CI_REGISTRY_IMAGE:docker-image" .
     - docker push "$CI_REGISTRY_IMAGE:docker-image"
