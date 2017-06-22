@@ -24,7 +24,7 @@ stages:
 
 cache:
   untracked: true
-  key: "$CI_COMMIT_REF_NAME/$CI_PIPELINE_ID"
+  key: "$CI_COMMIT_REF_NAME"
   paths:
   - node_modules
 
