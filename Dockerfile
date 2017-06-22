@@ -7,11 +7,11 @@ EXPOSE 8081
 
 # RUN adduser -u 1001 -G root -s /bin/sh -D pipcompare
 
-RUN touch /var/run/nginx.pid && \
-  chown -R pipcompare:pipcompare /var/run/nginx.pid && \
-  chown -R pipcompare:pipcompare /var/cache/nginx
+# RUN touch /var/run/nginx.pid && \
+#   chown -R www-data:www-data /var/run/nginx.pid && \
+#   chown -R www-data:www-data /var/cache/nginx
 
-USER pipcompare
+USER nginx
 
-ENTRYPOINT ["nginx"]
-CMD ["-g", "daemon off;"]
+# ENTRYPOINT ["nginx"]
+# CMD ["-g", "daemon off;"]
