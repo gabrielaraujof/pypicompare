@@ -3,7 +3,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY dist /usr/share/nginx/html
 
-RUN adduser --uid 1001 --gid 0 -D -S -h /var/cache/nginx -s /sbin/nologin pipcompare
+RUN adduser -u 1001 -g 0 -D -S -h /var/cache/nginx -s /sbin/nologin pipcompare
 
 EXPOSE 8081
 
