@@ -32,7 +32,6 @@ linter:
   <<: *ng_image
   stage: linter
   script:
-    - rm -R node_modules/*
     - *npm_install
     - node_modules/.bin/ng lint
   only:
