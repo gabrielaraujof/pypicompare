@@ -7,9 +7,9 @@ EXPOSE 8081
 
 # RUN adduser -u 1001 -G root -s /bin/sh -D pipcompare
 
-# RUN touch /var/run/nginx.pid && \
-#   chown -R www-data:www-data /var/run/nginx.pid && \
-#   chown -R www-data:www-data /var/cache/nginx
+RUN touch /var/run/nginx.pid && \
+  chown -R nginx:nginx /var/run/nginx.pid && \
+  chown -R nginx:nginx /var/cache/nginx
 
 USER nginx
 
