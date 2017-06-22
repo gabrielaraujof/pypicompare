@@ -5,11 +5,11 @@ COPY dist /usr/share/nginx/html
 
 EXPOSE 8081
 
-RUN adduser -u 1001 -G root -s /bin/sh -D pipcompare
+# RUN adduser -u 1001 -G root -s /bin/sh -D pipcompare
 
 RUN touch /var/run/nginx.pid && \
-  chown -R pipcompare:0 /var/run/nginx.pid && \
-  chown -R pipcompare:0 /var/cache/nginx
+  chown -R pipcompare:pipcompare /var/run/nginx.pid && \
+  chown -R pipcompare:pipcompare /var/cache/nginx
 
 USER pipcompare
 
