@@ -72,7 +72,7 @@ review:
     - command deploy
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: http://$CI_COMMIT_REF_NAME.review-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
+    url: http://$CI_COMMIT_REF_NAME-review-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
     on_stop: stop_review
   dependencies:
     - build
