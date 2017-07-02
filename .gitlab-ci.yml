@@ -67,7 +67,7 @@ docker-image:
 review:
   stage: deploy
   variables:
-    CI_ENVIRONMENT_URL: http://$CI_COMMIT_REF_NAME.review-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
+    CI_ENVIRONMENT_URL: http://$CI_COMMIT_REF_NAME-review-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
   script:
     - command deploy
   environment:
