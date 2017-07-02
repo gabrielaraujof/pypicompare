@@ -12,6 +12,6 @@ RUN chmod -R a+rwx /var/run && \
     chown -R 1001:0 /etc/nginx && \
     rm /etc/nginx/conf.d/default.conf
 
-USER 1001
+USER 0
 
 EXPOSE 8080
