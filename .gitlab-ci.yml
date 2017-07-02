@@ -7,10 +7,6 @@
 
 image: registry.gitlab.com/gitlab-examples/openshift-deploy
 
-variables:
-  # Application deployment domain
-  KUBE_DOMAIN: starter-us-east-1.openshiftapps.com
-
 stages:
   - check
   - bundle
@@ -71,12 +67,12 @@ docker-image:
 review:
   stage: deploy
   variables:
-    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.review.$KUBE_DOMAIN
+    CI_ENVIRONMENT_URL: http://$CI_COMMIT_REF_NAME.review-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
   script:
     - command deploy
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: http://$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.review.$KUBE_DOMAIN
+    url: http://$CI_COMMIT_REF_NAME.review-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
     on_stop: stop_review
   dependencies:
     - build
@@ -88,12 +84,12 @@ review:
 staging:
   stage: deploy
   variables:
-    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME-staging.$KUBE_DOMAIN
+    CI_ENVIRONMENT_URL: http://staging-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
   script:
     - command deploy
   environment:
     name: staging
-    url: http://$CI_PROJECT_NAME-staging.$KUBE_DOMAIN
+    url: http://staging-$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
   dependencies:
     - build
   only:
@@ -102,12 +98,12 @@ staging:
 production:
   stage: deploy
   variables:
-    CI_ENVIRONMENT_URL: http://$CI_PROJECT_NAME.$KUBE_DOMAIN
+    CI_ENVIRONMENT_URL: http://$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
   script:
     - command deploy
   environment:
     name: production
-    url: http://$CI_PROJECT_NAME.$KUBE_DOMAIN
+    url: http://$KUBE_NAMESPACE.1d35.$OPENSHIFT_DOMAIN
   dependencies:
     - build
   when: manual
@@ -119,7 +115,7 @@ stop_review:
   variables:
     GIT_STRATEGY: none
   script:
-    - command remove_deploy
+    - command destroy
   environment:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
