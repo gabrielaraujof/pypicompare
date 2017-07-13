@@ -12,18 +12,22 @@ import { PypiPackage } from './package.model';
 
 @Injectable()
 export class PackageService {
-  private pypiUrl = 'http://pypi.python.org/pypi';
+  private pypiUrl = 'https://pypi.python.org/pypi';
 
   constructor(private http: Http) { }
 
-  getPackages(packages: Array<string>): Observable<PypiPackage> {
+  getPackages(packages: Array<string>): Observable<PypiPackage[]> {
     const packageObservables = packages.map((packageName: string) => {
       return this.http.get(`${this.pypiUrl}/${packageName}/json`);
     });
 
-    return Observable.merge(...packageObservables)
-      .map((res: Response) => <PypiPackage>res.json())
-      .catch(this.handleError);
+    const resultObservable = Observable.merge(...packageObservables)
+      .map((res: Response) => new PypiPackage(res.json()))
+      .toArray();
+
+    resultObservable.catch(this.handleError);
+
+    return resultObservable;
   }
 
   private handleError(error) {

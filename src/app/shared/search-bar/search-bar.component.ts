@@ -15,7 +15,7 @@ export class SearchBarComponent {
 
   search(): void {
     if (this.query) {
-      this._router.navigate(['/search'], { queryParams: { name: this.arrayfying(this.query) } });
+      this._router.navigate(['/search'], { queryParams: { packages: this.arrayfying(this.query) } });
     }
   }
 

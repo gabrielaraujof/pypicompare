@@ -1,41 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable, Subscription } from 'rxjs/Rx';
+
+import 'rxjs/add/operator/switch';
+
 import { PackageService, PypiPackage } from '../shared';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  templateUrl: 'comparison.component.html'
+  templateUrl: 'comparison.component.html',
+  styleUrls: ['comparison.component.scss']
 })
-export class ComparisonComponent implements OnInit {
-  packagesName: string[];
-  packagesResult: PypiPackage;
-  errorMessage: string;
-  params: string;
+export class ComparisonComponent implements OnInit, OnDestroy {
+  selectedPackages: Array<PypiPackage>;
+  private _packagesSubscription: Subscription;
 
   constructor(private _packageService: PackageService,
-    private _route: ActivatedRoute,
-    private _router: Router) {
+    private _route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this._router.routerState
-      .root
-      .queryParams
-      .subscribe(data => {
-        this.params = data['name'];
-        this.getPackages();
-      });
+    this._packagesSubscription = this._route.queryParams
+      .map((params: Params): Observable<PypiPackage[]> => {
+        const queryPackages = params['packages'];
+        if (queryPackages) {
+          return this._packageService.getPackages(queryPackages);
+        } else {
+          return Observable.empty();
+        }
+      })
+      .switch()
+      .subscribe(fetchedPackages => this.selectedPackages = fetchedPackages);
   }
 
-  /**
-   * Method calls service to get data of api.
-   * @param data
-   */
-  getPackages(): void {
-    this._packageService.getPackages([this.params])
-      .subscribe(
-      packages => this.packagesResult = packages,
-      erro => this.errorMessage = erro
-      );
+  ngOnDestroy(): void {
+    this._packagesSubscription.unsubscribe();
   }
-
 }
