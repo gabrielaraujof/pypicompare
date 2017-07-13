@@ -20,7 +20,7 @@ export class ComparisonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._packagesSubscription = this._route.queryParams
-      .map((params: Params) => {
+      .map((params: Params): Observable<PypiPackage[]> => {
         const queryPackages = params['packages'];
         if (queryPackages) {
           return this._packageService.getPackages(queryPackages);
