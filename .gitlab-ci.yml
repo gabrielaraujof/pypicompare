@@ -1,16 +1,14 @@
 image: gabrielaraujof/angular-cli:latest
 
 stages:
-  - linter
-  - unit test
-  - build
+  - checks
   - deploy staging
   - e2e test
   - deploy prod
 
 cache:
   untracked: true
-  key: "$CI_BUILD_REF_NAME"
+  key: "$CI_COMMIT_REF_NAME/$CI_PIPELINE_ID"
   paths:
   - node_modules
 
@@ -18,16 +16,16 @@ before_script:
   - npm install --quiet
 
 linting:
-  stage: linter
+  stage: checks
   script: ng lint
 
 testing:
-  stage: unit test
+  stage: checks
   script:
-  - ng test --watch=false
+  - ng test -sr
 
 bundling:
-  stage: build
+  stage: checks
   script:
   - ng build --prod
   artifacts:
