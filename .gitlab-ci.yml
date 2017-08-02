@@ -1,10 +1,8 @@
 image: gabrielaraujof/angular-cli:latest
 
 stages:
-  - checks
-  - deploy staging
-  - e2e test
-  - deploy prod
+  - integration
+  - deploy
 
 cache:
   untracked: true
@@ -16,16 +14,16 @@ before_script:
   - npm install --quiet
 
 linting:
-  stage: checks
+  stage: integration
   script: ng lint
 
 testing:
-  stage: checks
+  stage: integration
   script:
   - ng test -sr
 
 bundling:
-  stage: checks
+  stage: integration
   script:
   - ng build --prod
   artifacts:
@@ -33,26 +31,7 @@ bundling:
     - dist/
 
 deploy:staging:
-  stage: deploy staging
-  script:
-  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
-  environment:
-    name: staging
-    url: https://pypicompare.firebaseapp.com
-  dependencies:
-  - bundling
-  only:
-  - master
-
-e2e:
-  stage: e2e test
-  script:
-  - ng e2e
-  only:
-  - master
-
-pages:
-  stage: deploy prod
+  stage: deploy
   script:
   - ng build --prod --bh /pypicompare/
   - mkdir public && mv dist/* public/.
@@ -60,8 +39,20 @@ pages:
     paths:
     - public
   environment:
-    name: production
+    name: staging
     url: https://gabrielaraujof.gitlab.io/pypicompare/
+  dependencies:
+  - bundling
+  only:
+  - master
+
+pages:
+  stage: deploy
+  script:
+  - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token=$FIREBASE_TOKEN --project pypicompare --non-interactive
+  environment:
+    name: production
+    url: https://pypicompare.firebaseapp.com
   only:
   - master
   when: manual
