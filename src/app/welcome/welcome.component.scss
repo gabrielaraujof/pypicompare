@@ -1,0 +1,43 @@
+@import '../shared/styles/root/colors';
+@import '../shared/styles/root/responsivity';
+@import '../shared/styles/root/spatial';
+@import '../shared/styles/root/typography';
+
+:host {
+  align-items: center;
+  background-color: map-get($g-color--primary, 900);
+  color: map-get($g-text--light, primary);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: ($increment-size * .5) 0;
+  text-align: center;
+
+  @include g-for-size(phone-only) {
+    padding: $increment-size * .25;
+  }
+}
+
+h1 {
+  @include g-font(display-3);
+
+  @include g-for-size(phone-only) {
+    @include g-font(display-1);
+  }
+}
+
+h2 {
+  @include g-font(headline);
+
+  @include g-for-size(phone-only) {
+    @include g-font(subheading);
+  }
+}
+
+.search {
+  width: 100%;
+
+  @include g-for-size(tablet-landscape-up) {
+    width: 70%;
+  }
+}

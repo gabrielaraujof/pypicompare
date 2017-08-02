@@ -1,6 +1,7 @@
 @import '../styles/root/colors';
-@import '../styles/root/typography';
+@import '../styles/root/responsivity';
 @import '../styles/root/spatial';
+@import '../styles/root/typography';
 
 :host {
   @include g-font(subheading);
@@ -10,9 +11,7 @@
   background-color: light(.16);
   border-radius: 3px;
   display: flex;
-  flex-grow: 1;
   height: $hsize;
-  margin-left: $g-default-spacing * 2;
   max-width: $increment-size * 12;
   position: relative;
   transition: background-color .2s ease;
@@ -48,6 +47,10 @@
 
     &::-webkit-input-placeholder {
       color: map-get($g-text--light, secondary);
+
+      @include g-for-size(phone-only) {
+        font-size: map-get($g-typography--size, caption);
+      }
     }
   }
 }
